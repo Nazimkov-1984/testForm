@@ -1,0 +1,27 @@
+.buttonAskQuestion {
+  padding: 10px;
+  border: 1px solid lightslategray;
+  border-radius: 10px;
+  box-shadow: 7px 7px 2px 1px rgba(0, 0, 255, .2);
+  transition: all .7s ease;
+}
+
+.buttonAskQuestion:hover{
+  cursor: pointer;
+  border-color: black;
+}
+.noShadow{
+  box-shadow: none;
+}
+.disabled:hover{
+  cursor: auto;
+  border-color: lightslategray;
+
+}
+@media (max-width: 614px) {
+  .buttonAskQuestion{
+    width: 100%;
+    margin: 0 6px;
+  }
+
+}
