@@ -1,55 +1,28 @@
 import { observable, makeAutoObservable, action, computed } from "mobx";
-import {FormField, IFormData} from "../repository/api";
+
+export interface FormField {
+    attrs:{
+        required:boolean;
+        placeholder:string;
+    };
+    label:string;
+    name:string;
+    type:string;
+    options?:Array<Record<string,string>>;
+    errors?:Array<string>;
+    value?:string;
+
+}
+export interface IFormData {
+    status:number;
+    form:Array<FormField>
+    message?:string;
+}
 
 
 class ModalStore {
     public _isOpenModal: boolean = false;
-    public _formDataModal:IFormData =   {
-        "status": 200,
-        "form": [
-            {
-                "attrs": {
-                    "required": true,
-                    "placeholder": "Введите Ваше ФИО"
-                },
-                "label": "ФИО",
-                "name": "first_name",
-                "type": "text",
-            },
-            {
-                "attrs": {
-                    "required": true,
-                    "placeholder": "Введите Ваш e-mail"
-                },
-                "label": "E-mail",
-                "name": "email",
-                "type": "email",
-            },
-            {
-                "attrs": {
-                    "required": true,
-                    "placeholder": "Выберите тип вопроса"
-                },
-                "label": "Тип вопроса",
-                "name": "type",
-                "type": "select",
-                "options": [
-                    {"order": "Вопрос по заказу"},
-                    {"return": "Вопрос по возврату"},
-                    {"cooperation": "Вопрос по сотрудничеству"}
-                ]
-            },
-            {
-                "attrs": {
-                    "required": true,
-                    "placeholder": "Ваше сообщение нам"
-                },
-                "label": "Сообщение",
-                "name": "message",
-                "type": "textarea",
-            }
-        ]
-    };
+    public _formDataModal:IFormData  = {} as IFormData ;
     public isDisabledButtonSendWithError:boolean = false;
     public isDisabledButtonSendWithSuccess:boolean = false;
 

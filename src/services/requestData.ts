@@ -1,42 +1,26 @@
-import {fetchCustomerMessageError, fetchCustomerMessageSuccess, fetchFormData} from "../repository/api";
-import modalStore from "../store/modalStore";
 
 class API {
-    static getFormData = ()=> {
-        fetchFormData().then(response => {
-            if(response.status === 200) {
-              modalStore.setFormData(response);
-            } else {
-                throw new Error("Empty data");
-            }
+    static getFormData =(fileUrl:string = "/backend/customer-message-form.json") =>  {
+      return  fetch(fileUrl).then(response => {
+           if(response.ok) {
+              return  response.clone().json();
+           }
         })
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
-    static getFormDataWithError = () => {
-        fetchCustomerMessageError().then(response => {
-            if(response.status === 400) {
-                modalStore.setFormDataWithError(response);
-            } else {
-                throw new Error("Empty data");
-            }
-        })
-            .catch(function (error) {
-                console.log(error);
-            });
     }
-    static getFormDataWithSuccess = () => {
-        fetchCustomerMessageSuccess().then(response => {
-            if(response.status === 200) {
-                modalStore.setFormDataWithSuccess(response);
-            } else {
-                throw new Error("Empty data");
+    static getFormDataWithSuccess = (fileUrl:string = "/backend/customer-message-success.json") => {
+        return  fetch(fileUrl).then(response => {
+            if(response.ok) {
+                return  response.clone().json();
             }
         })
-            .catch(function (error) {
-                console.log(error);
-            });
     }
+    static getFormDataWithError = (fileUrl:string = "/backend/customer-message-error.json") => {
+        return  fetch(fileUrl).then(response => {
+            if(response.ok) {
+                return  response.clone().json();
+            }
+        })
+    }
+
 }
 export default API;

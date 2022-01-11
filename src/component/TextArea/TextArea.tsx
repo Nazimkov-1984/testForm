@@ -13,9 +13,11 @@ interface IProps {
     isNotValid?: boolean;
     name:string;
     errorText?:string[];
+    onChange?:()=>void;
+
 }
 
-const TextArea = ({value, labelText, forInput, placeholderText, name, isNotValid, errorText}: IProps) => {
+const TextArea = ({value, labelText, forInput, placeholderText, name, isNotValid, errorText, onChange}: IProps) => {
 
     return (
         <div className={scss.inputContainer}>
@@ -27,6 +29,7 @@ const TextArea = ({value, labelText, forInput, placeholderText, name, isNotValid
                 defaultValue={value ? value : ""}
                 className={classNames(scss.input, scss.textArea,{[scss.inputNotValid]: isNotValid !== undefined && isNotValid})}
                 placeholder={placeholderText ? placeholderText : ""}
+                onChange={onChange}
             />
             {errorText && (
                 <MessageError text={errorText[0]}/>

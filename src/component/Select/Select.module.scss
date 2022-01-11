@@ -1,29 +1,57 @@
-.selectWrapper{
+.selectWrapper {
   position: relative;
 }
-.selectForQuestions{
-display: flex;
+
+.selectForQuestions {
+  display: flex;
   width: 420px;
   height: 54px;
   border-radius: 8px;
   background-color: transparent;
   transition: all .7s ease;
-  padding: 0 20px;
-}
-.selectForQuestions:hover{
-  cursor: pointer;
-}
-.placeholder{
-  position: absolute;
-  z-index: 1;
-  left: 23px;
-  top: 2px;
-  pointer-events: none;
-  font-size: 12px
+  padding: 4px 20px;
+  font-size: 18px;
+  color: black;
+  align-items: flex-end;
+  border: 1px solid #E0E5E9;
+  appearance: none;
 }
 
-@media (max-width:614px){
-  .selectForQuestions{
+.selectForQuestions:hover, .arrow:hover{
+  cursor: pointer;
+}
+
+.placeholder {
+  position: absolute;
+  z-index: 1;
+  left: 20px;
+  top: 5px;
+  pointer-events: none;
+  font-size: 14px;
+  color: lightslategray;
+  font-weight: 200;
+  font-family: sans-serif;
+}
+
+.arrow {
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+  right: 20px ;
+  top:30%;
+}
+
+.emptyOption {
+  display: none;
+}
+
+.option {
+  font-size: 18px;
+  color: black;
+}
+
+@media (max-width: 614px) {
+  .selectForQuestions {
     width: 350px;
   }
 }

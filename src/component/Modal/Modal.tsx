@@ -1,13 +1,13 @@
 import {useCallback} from "react";
-import ModalStore from "../../store/modalStore";
+import ModalStore, { IFormData } from "../../store/modalStore";
 import {observer} from "mobx-react-lite";
 import Button from "../Button/Button";
-import API from "../../services/requestData";
 import ModalField from "../ModalField/ModalField";
 import modalStore from "../../store/modalStore";
 import SuccessMesagge from "../SuccessMesagge/SuccessMesagge";
 import classNames from "classnames";
-
+import API from "../../services/requestData";
+import sendFormData from"../../services/sendFormData";
 interface IProps {
     textHeader?: string
 }
@@ -27,28 +27,43 @@ const Modal = observer(({textHeader}: IProps) => {
     }, []);
 
     const onSendWithSuccess = useCallback(() => {
-        API.getFormDataWithSuccess();
+        API.getFormDataWithSuccess().then(res=> {
+            if(res.status === 200) {
+                modalStore.setFormData(res);
+            }
+        })
         modalStore.toggleDisabledButton("success")
     }, []);
 
     const onSendWithError = useCallback(() => {
-        API.getFormDataWithError();
+        API.getFormDataWithError().then(res=> {
+            if(res.status === 400) {
+                console.log(res);
+                modalStore.setFormData(res);
+            }
+        })
         modalStore.toggleDisabledButton("error");
     }, []);
+
+    // отправка данных формы на сервер
+    // const onSendForm= useCallback(()=> {
+    //     const payload:IFormData = ModalStore.getFormData;
+    //     sendFormData(payload);
+    // },[]);
 
     if (ModalStore.isOpenModal) {
         return (
             <div className={scss.modal} onClick={onOutsideClick}>
-                <div className={classNames(scss.modalBody,{[scss.hasMessage]:ModalStore.getFormData.message})}>
+                <div className={classNames(scss.modalBody,{[scss.hasMessage]:modalStore.getFormData.message})}>
                     <div className={scss.modalHeader}>
                         <i className={scss.close} onClick={closeModal}/>
                     </div>
-                    {ModalStore.getFormData.message ? (
-                        <SuccessMesagge text={ModalStore.getFormData.message}/>
+                    {modalStore.getFormData.message? (
+                        <SuccessMesagge text={modalStore.getFormData.message}/>
                     ): (
                         <>
                         <div className={scss.modalBody}>
-                            {ModalStore.getFormTypesFields.map(field => {
+                            {ModalStore.getFormTypesFields.map((field:any) => {
                                 return (
                                     <ModalField field={field} key={field.name}/>
                                 )
